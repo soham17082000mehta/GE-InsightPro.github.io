@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GE InsightPro - AI-Powered Sales Intelligence Platform</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #2d5aa0 0%, #1e3a5f 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo::before {
+            content: "🧠";
+            margin-right: 10px;
+            font-size: 32px;
+        }
+
+        .nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-item {
+            cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .main-dashboard {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+        }
+
+        .card-icon {
+            font-size: 24px;
+            margin-right: 12px;
+            padding: 8px;
+            border-radius: 8px;
+            background: linear-gradient(135deg, #2d5aa0 0%, #1e3a5f 100%);
+        }
+
+        .card-title-text {
+            font-size: 20px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .status-badge {
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status-live {
+            background: #28a745;
+            color: white;
+        }
+
+        .status-processing {
+            background: #ffc107;
+            color: #212529;
+        }
+
+        .status-complete {
+            background: #17a2b8;
+            color: white;
+        }
+
+        .meeting-recorder {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .meeting-recorder.recording {
+            background: linear-gradient(135deg, #dc354520 0%, #28a74520 100%);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
+        }
+
+        .record-btn {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+
+        .record-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .record-btn.recording {
+            background: #28a745;
+        }
+
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .insight-card {
+            background: #f8f9fa;
+            border-left: 4px solid #2d5aa0;
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        .insight-title {
+            font-weight: 600;
+            color: #2d5aa0;
+            margin-bottom: 8px;
+        }
+
+        .insight-value {
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .crm-panel {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .crm-entry {
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid #28a745;
+        }
+
+        .crm-entry:last-child {
+            margin-bottom: 0;
+        }
+
+        .entry-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .entry-title {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .entry-time {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .stakeholder-map {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .stakeholder {
+            background: white;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .stakeholder.high-influence {
+            border: 2px solid #28a745;
+        }
+
+        .stakeholder.medium-influence {
+            border: 2px solid #ffc107;
+        }
+
+        .stakeholder.low-influence {
+            border: 2px solid #dc3545;
+        }
+
+        .stakeholder-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #2d5aa0 0%, #1e3a5f 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+        }
+
+        .influence-level {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 10px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+
+        .high-influence .influence-level {
+            background: #28a745;
+        }
+
+        .medium-influence .influence-level {
+            background: #ffc107;
+        }
+
+        .low-influence .influence-level {
+            background: #dc3545;
+        }
+
+        .presentation-builder {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+
+        .audience-selector {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .audience-option {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .audience-option:hover, .audience-option.selected {
+            border-color: #2d5aa0;
+            background: linear-gradient(135deg, #2d5aa020 0%, #1e3a5f20 100%);
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #2d5aa0 0%, #1e3a5f 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(45, 90, 160, 0.4);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .meeting-timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline-item {
+            position: relative;
+            background: white;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 3px solid #2d5aa0;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 20px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #2d5aa0;
+        }
+
+        .competitor-analysis {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .competitor-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            border: 2px solid #e9ecef;
+        }
+
+        .competitor-card.philips {
+            border-color: #0066cc;
+        }
+
+        .competitor-card.siemens {
+            border-color: #00a0b0;
+        }
+
+        .metrics-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .metric-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .metric-value {
+            font-size: 32px;
+            font-weight: bold;
+            color: #2d5aa0;
+            margin-bottom: 5px;
+        }
+
+        .metric-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .progress-bar {
+            background: #e9ecef;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+
+        .progress-fill {
+            background: linear-gradient(135deg, #2d5aa0 0%, #1e3a5f 100%);
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .meeting-controls {
+            display: flex;
+            gap: 15px;
+            margin: 20px 0;
+            justify-content: center;
+        }
+
+        .notification {
+            background: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin: 15px 0;
+        }
+
+        @media (max-width: 768px) {
+            .main-dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .insights-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stakeholder-map {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            }
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            background: white;
+            border: 2px solid #e9ecef;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-btn.active {
+            background: #2d5aa0;
+            color: white;
+            border-color: #2d5aa0;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">GE InsightPro</div>
+            <nav class="nav">
+                <div class="nav-item active" onclick="showSection('conversation')">Conversation Intelligence</div>
+                <div class="nav-item" onclick="showSection('crm')">CRM & MoM</div>
+                <div class="nav-item" onclick="showSection('presentation')">Smart Presentations</div>
+                <div class="nav-item" onclick="showSection('analytics')">Analytics</div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Conversation Intelligence Section -->
+        <div id="conversation-section" class="section active">
+            <div class="main-dashboard">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <div class="card-icon">🎙️</div>
+                            <div>
+                                <div class="card-title-text">Meeting Intelligence</div>
+                                <div style="color: #666; font-size: 14px;">Real-time conversation analysis</div>
+                            </div>
+                        </div>
+                        <div class="status-badge status-live" id="meeting-status">LIVE</div>
+                    </div>
+                    
+                    <div class="meeting-recorder" id="meeting-recorder">
+                        <button class="record-btn" id="record-btn" onclick="toggleRecording()">🎙️</button>
+                        <h3 id="recorder-title">Ready to Record</h3>
+                        <p id="recorder-subtitle">Click to start capturing meeting insights</p>
+                        <div class="progress-bar" id="recording-progress" style="display: none;">
+                            <div class="progress-fill" style="width: 45%"></div>
+                        </div>
+                        <p id="recording-time" style="display: none;">Recording: 23:47</p>
+                    </div>
+                    
+                    <div class="meeting-controls">
+                        <button class="btn" onclick="startMeeting()">Start Meeting</button>
+                        <button class="btn btn-secondary" onclick="loadDemo()">Load Demo</button>
+                        <button class="btn" onclick="generateSummary()">Generate Summary</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <div class="card-icon">👥</div>
+                            <div class="card-title-text">Stakeholder Influence</div>
+                        </div>
+                    </div>
+                    
+                    <div class="stakeholder-map">
+                        <div class="stakeholder high-influence">
+                            <div class="stakeholder-avatar">JM</div>
+                            <div class="influence-level">H</div>
+                            <div style="font-weight: 600;">Dr. Jane Miller</div>
+                            <div style="font-size: 12px; color: #666;">Chief of Radiology</div>
+                        </div>
+                        <div class="stakeholder medium-influence">
+                            <div class="stakeholder-avatar">RB</div>
+                            <div class="influence-level">M</div>
+                            <div style="font-weight: 600;">Robert Chen</div>
+                            <div style="font-size: 12px; color: #666;">IT Director</div>
+                        </div>
+                        <div class="stakeholder high-influence">
+                            <div class="stakeholder-avatar">SK</div>
+                            <div class="influence-level">H</div>
+                            <div style="font-weight: 600;">Sarah Kumar</div>
+                            <div style="font-size: 12px; color: #666;">CFO</div>
+                        </div>
+                        <div class="stakeholder low-influence">
+                            <div class="stakeholder-avatar">AL</div>
+                            <div class="influence-level">L</div>
+                            <div style="font-weight: 600;">Alex Lopez</div>
+                            <div style="font-size: 12px; color: #666;">Procurement</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="insights-grid">
+                <div class="insight-card">
+                    <div class="insight-title">Key Topics</div>
+                    <div class="insight-value">ROI Analysis</div>
+                    <div style="font-size: 12px; color: #666;">Mentioned 8 times</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-title">Sentiment</div>
+                    <div class="insight-value" style="color: #28a745;">Positive</div>
+                    <div style="font-size: 12px; color: #666;">73% confidence</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-title">Competitors</div>
+                    <div class="insight-value" style="color: #ffc107;">Philips</div>
+                    <div style="font-size: 12px; color: #666;">3 mentions</div>
+                </div>
+                <div class="insight-card">
+                    <div class="insight-title">Next Steps</div>
+                    <div class="insight-value">Demo Request</div>
+                    <div style="font-size: 12px; color: #666;">Action required</div>
+                </div>
+            </div>
+
+            <div class="competitor-analysis">
+                <div class="competitor-card philips">
+                    <h4 style="color: #0066cc; margin-bottom: 15px;">vs Philips HealthSuite</h4>
+                    <div style="margin-bottom: 10px;">
+                        <strong>Strengths:</strong> Established platform, imaging focus
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <strong>Weaknesses:</strong> Limited AI analytics, higher cost
+                    </div>
+                    <div style="background: #f8f9fa; padding: 10px; border-radius: 6px;">
+                        <strong>Counter-Argument:</strong> GE's superior AI insights and ROI optimization
+                    </div>
+                </div>
+                <div class="competitor-card siemens">
+                    <h4 style="color: #00a0b0; margin-bottom: 15px;">vs Siemens Healthineers</h4>
+                    <div style="margin-bottom: 10px;">
+                        <strong>Strengths:</strong> Comprehensive portfolio, R&D investment
+                    </div>
+                    <div style="margin-bottom: 10px;">
+                        <strong>Weaknesses:</strong> Complex integration, lengthy deployment
+                    </div>
+                    <div style="background: #f8f9fa; padding: 10px; border-radius: 6px;">
+                        <strong>Counter-Argument:</strong> GE's faster implementation and proven results
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CRM & MoM Section -->
+        <div id="crm-section" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon">📊</div>
+                        <div class="card-title-text">Automated CRM Updates</div>
+                    </div>
+                    <div class="status-badge status-processing">Processing</div>
+                </div>
+                
+                <div class="crm-panel">
+                    <div class="crm-entry">
+                        <div class="entry-header">
+                            <div class="entry-title">Opportunity Updated: MRI System - St. Mary's Hospital</div>
+                            <div class="entry-time">2 minutes ago</div>
+                        </div>
+                        <div>Stage: Evaluation → Proposal | Probability: 65% → 78% | Next Step: Demo scheduling</div>
+                    </div>
+                    <div class="crm-entry">
+                        <div class="entry-header">
+                            <div class="entry-title">Contact Created: Dr. Jane Miller - Decision Maker</div>
+                            <div class="entry-time">5 minutes ago</div>
+                        </div>
+                        <div>Role: Chief of Radiology | Influence: High | Budget Authority: Yes</div>
+                    </div>
+                    <div class="crm-entry">
+                        <div class="entry-header">
+                            <div class="entry-title">Competitor Intelligence: Philips mentioned as alternative</div>
+                            <div class="entry-time">8 minutes ago</div>
+                        </div>
+                        <div>Context: Price comparison requested | Action: Send competitive analysis</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-dashboard">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <div class="card-icon">📝</div>
+                            <div class="card-title-text">Meeting Minutes Generator</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin: 15px 0;">
+                        <h4 style="margin-bottom: 15px;">Meeting: MRI System Evaluation - St. Mary's Hospital</h4>
+                        <div style="margin-bottom: 15px;">
+                            <strong>Date:</strong> Aug 24, 2025 | <strong>Duration:</strong> 45 minutes | <strong>Participants:</strong> 4
+                        </div>
+                        
+                        <div class="meeting-timeline">
+                            <div class="timeline-item">
+                                <strong>Opening & Introductions (5 min)</strong>
+                                <p>Dr. Miller expressed urgency for MRI upgrade due to increasing patient volume</p>
+                            </div>
+                            <div class="timeline-item">
+                                <strong>Technical Requirements Discussion (15 min)</strong>
+                                <p>3T magnet essential, AI-enhanced imaging preferred, integration with existing PACS</p>
+                            </div>
+                            <div class="timeline-item">
+                                <strong>Financial Analysis (20 min)</strong>
+                                <p>CFO Kumar focused on ROI, payback period, and operational cost savings</p>
+                            </div>
+                            <div class="timeline-item">
+                                <strong>Competitive Discussion (5 min)</strong>
+                                <p>Philips mentioned as comparison, pricing concerns raised</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="meeting-controls">
+                        <button class="btn" onclick="generateMoM()">Generate Minutes</button>
+                        <button class="btn btn-secondary" onclick="customizeMoM()">Customize</button>
+                        <button class="btn btn-success" onclick="distributeMoM()">Distribute</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <div class="card-icon">🎯</div>
+                            <div class="card-title-text">Action Items & Follow-ups</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                        <div style="margin-bottom: 15px; padding: 15px; background: white; border-radius: 6px; border-left: 4px solid #dc3545;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <strong>Send SIGNA Premier technical specs</strong>
+                                    <p style="margin: 5px 0; color: #666;">Owner: Sales Rep | Due: Aug 26, 2025</p>
+                                </div>
+                                <button class="btn" style="padding: 8px 16px;">Complete</button>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px; padding: 15px; background: white; border-radius: 6px; border-left: 4px solid #ffc107;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <strong>Schedule demo for clinical team</strong>
+                                    <p style="margin: 5px 0; color: #666;">Owner: Dr. Miller | Due: Aug 28, 2025</p>
+                                </div>
+                                <button class="btn btn-secondary" style="padding: 8px 16px;">Pending</button>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px; padding: 15px; background: white; border-radius: 6px; border-left: 4px solid #28a745;">
+                            <div style="display: flex; justify-content: space-between; align-items: center;">
+                                <div>
+                                    <strong>Prepare ROI analysis presentation</strong>
+                                    <p style="margin: 5px 0; color: #666;">Owner: GE Team | Due: Aug 27, 2025</p>
+                                </div>
+                                <button class="btn btn-success" style="padding: 8px 16px;">Done</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Smart Presentations Section -->
+        <div id="presentation-section" class="section">
+            <div class="card">
+                <div class="card-header">
+                    <div class="card-title">
+                        <div class="card-icon">🎨</div>
+                        <div class="card-title-text">Dynamic Presentation Builder</div>
+                    </div>
+                </div>
+                
+                <div class="presentation-builder">
+                    <h4 style="margin-bottom: 20px;">Select Target Audience</h4>
+                    <div class="audience-selector">
+                        <div class="audience-option selected" onclick="selectAudience('clinical')">
+                            <div style="font-size: 32px; margin-bottom: 10px;">👩‍⚕️</div>
+                            <div style="font-weight: 600;">Clinical Team</div>
+                            <div style="font-size: 12px; color: #666;">Outcome-focused</div>
+                        </div>
+                        <div class="audience-option" onclick="selectAudience('finance')">
+                            <div style="font-size: 32px; margin-bottom: 10px;">💰</div>
+                            <div style="font-weight: 600;">Finance/CFO</div>
+                            <div style="font-size: 12px; color: #666;">ROI-driven</div>
+                        </div>
+                        <div class="audience-option" onclick="selectAudience('admin')">
+                            <div style="font-size: 32px; margin-bottom: 10px;">⚙️</div>
+                            <div style="font-weight: 600;">Administration</div>
+                            <div style="font-size: 12px; color: #666;">Operational</div>
+                        </div>
+                        <div class="audience-option" onclick="selectAudience('tech')">
+                            <div style="font-size: 32px; margin-bottom: 10px;">🔧</div>
+                            <div style="font-weight: 600;">Technical Team</div>
+                            <div style="font-size: 12px; color: #666;">Integration specs</div>
+                        </div>
+                    </div>
+                    
+                    <div class="notification">
+                        <strong>AI Recommendation:</strong> Based on stakeholder analysis, focus on clinical outcomes and ROI for this audience mix.
+                    </div>
+                    
+                    <div style="background: white; border-radius: 8px; padding: 20px; margin: 20px 0;">
+                        <h4 style="margin-bottom: 15px;">Generated Presentation Outline</h4>
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                            <div>
+                                <strong>Clinical Focus Slides:</strong>
+                                <ul style="margin: 10px 0; padding-left: 20px;">
+                                    <li>Patient Outcomes Improvement</li>
+                                    <li>Diagnostic Accuracy Enhancement</li>
+                                    <li>Workflow Optimization</li>
+                                    <li>Case Studies & Evidence</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <strong>Financial Focus Slides:</strong>
+                                <ul style="margin: 10px 0; padding-left: 20px;">
+                                    <li>ROI Analysis & Projections</li>
+                                    <li>Cost-Benefit Comparison</li>
+                                    <li>Operational Savings</li>
+                                    <li>Financing Options</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="meeting-controls">
+                        <button class="btn" onclick="generatePresentation()">Generate Slides</button>
+                        <button class="btn btn-secondary" onclick="schedulePresentation()">Schedule Meeting</button>
+                        <button class="btn" onclick="previewPresentation()">Preview</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="metrics-row">
+                <div class="metric-card">
+                    <div class="metric-value">87%</div>
+                    <div class="metric-label">Presentation Success Rate</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">34</div>
+                    <div class="metric-label">Templates Generated</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">2.3x</div>
+                    <div class="metric-label">Faster Preparation</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">94%</div>
+                    <div class="metric-label">Stakeholder Satisfaction</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Section -->
+        <div id="analytics-section" class="section">
+            <div class="metrics-row">
+                <div class="metric-card">
+                    <div class="metric-value">156</div>
+                    <div class="metric-label">Meetings Analyzed</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">23%</div>
+                    <div class="metric-label">Win Rate Improvement</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">4.2hrs</div>
+                    <div class="metric-label">Time Saved Weekly</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">89%</div>
+                    <div class="metric-label">CRM Data Accuracy</div>
+                </div>
+            </div>
+
+            <div class="main-dashboard">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <div class="card-icon">📈</div>
+                            <div class="card-title-text">Sales Performance Analytics</div>
+                        </div>
+                    </div>
+                    
+                    <div style="background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                        <h4 style="margin-bottom: 20px;">Deal Progression Analysis</h4>
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>Lead to Meeting</span>
+                                <span>78%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 78%"></div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>Meeting to Proposal</span>
+                                <span>65%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 65%"></div>
+                            </div>
+                        </div>
+                        
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <span>Proposal to Close</span>
+                                <span>42%</span>
+                            </div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 42%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            <div class="card-icon">🎯</div>
+                            <div class="card-title-text">Key Performance Insights</div>
+                        </div>
+                    </div>
+                    
+                    <div class="insights-grid">
+                        <div class="insight-card">
+                            <div class="insight-title">Top Objection</div>
+                            <div class="insight-value" style="font-size: 14px;">Price vs Value</div>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-title">Best Positioning</div>
+                            <div class="insight-value" style="font-size: 14px;">Clinical Outcomes</div>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-title">Avg. Deal Size</div>
+                            <div class="insight-value">$2.3M</div>
+                        </div>
+                        <div class="insight-card">
+                            <div class="insight-title">Sales Cycle</div>
+                            <div class="insight-value">4.2 months</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let isRecording = false;
+        let selectedAudience = 'clinical';
+
+        function showSection(section) {
+            // Hide all sections
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            // Show selected section
+            document.getElementById(section + '-section').style.display = 'block';
+            event.target.classList.add('active');
+        }
+
+        function toggleRecording() {
+            isRecording = !isRecording;
+            const btn = document.getElementById('record-btn');
+            const recorder = document.getElementById('meeting-recorder');
+            const title = document.getElementById('recorder-title');
+            const subtitle = document.getElementById('recorder-subtitle');
+            const status = document.getElementById('meeting-status');
+            const progress = document.getElementById('recording-progress');
+            const time = document.getElementById('recording-time');
+
+            if (isRecording) {
+                btn.innerHTML = '⏹️';
+                btn.classList.add('recording');
+                recorder.classList.add('recording');
+                title.textContent = 'Recording in Progress';
+                subtitle.textContent = 'AI analyzing conversation in real-time';
+                status.textContent = 'RECORDING';
+                status.className = 'status-badge status-live';
+                progress.style.display = 'block';
+                time.style.display = 'block';
+                
+                // Simulate progress
+                let progressWidth = 0;
+                const interval = setInterval(() => {
+                    progressWidth += 2;
+                    document.querySelector('#recording-progress .progress-fill').style.width = progressWidth + '%';
+                    if (progressWidth >= 100 || !isRecording) {
+                        clearInterval(interval);
+                    }
+                }, 1000);
+            } else {
+                btn.innerHTML = '🎙️';
+                btn.classList.remove('recording');
+                recorder.classList.remove('recording');
+                title.textContent = 'Recording Stopped';
+                subtitle.textContent = 'Processing insights...';
+                status.textContent = 'PROCESSING';
+                status.className = 'status-badge status-processing';
+            }
+        }
+
+        function startMeeting() {
+            alert('Meeting started! Ready to capture insights and generate real-time analysis.');
+        }
+
+        function loadDemo() {
+            isRecording = true;
+            toggleRecording();
+            setTimeout(() => {
+                alert('Demo loaded: Sample meeting with St. Mary\'s Hospital stakeholders analyzing MRI system requirements.');
+            }, 1000);
+        }
+
+        function generateSummary() {
+            alert('AI summary generated:\n\n• Key Decision Makers: Dr. Miller (High Influence), Sarah Kumar (Budget Authority)\n• Main Concerns: ROI justification, integration complexity\n• Competitive Threats: Philips mentioned as alternative\n• Next Steps: Demo scheduling, technical specs delivery\n• Probability: 78% (increased from 65%)');
+        }
+
+        function selectAudience(audience) {
+            selectedAudience = audience;
+            document.querySelectorAll('.audience-option').forEach(option => {
+                option.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+        }
+
+        function generatePresentation() {
+            alert(`Presentation generated for ${selectedAudience} audience!\n\n• 18 slides created\n• Customized content based on stakeholder analysis\n• Competitive positioning included\n• Ready for delivery`);
+        }
+
+        function schedulePresentation() {
+            alert('Meeting scheduler opened:\n\n• Stakeholder calendars analyzed\n• Optimal time slot: Aug 28, 2025 at 2:00 PM\n• All key decision makers available\n• Meeting invite sent');
+        }
+
+        function previewPresentation() {
+            alert('Presentation preview:\n\n1. Executive Summary\n2. Clinical Outcomes Focus\n3. ROI Analysis\n4. Technical Specifications\n5. Implementation Timeline\n6. Competitive Advantages\n7. Next Steps');
+        }
+
+        function generateMoM() {
+            alert('Meeting minutes generated:\n\n• Executive summary created\n• Action items identified\n• Stakeholder-specific versions prepared\n• Ready for distribution');
+        }
+
+        function customizeMoM() {
+            alert('Customization options:\n\n• Adjust detail level\n• Add/remove sections\n• Customize for different stakeholders\n• Include competitive intelligence');
+        }
+
+        function distributeMoM() {
+            alert('Minutes distributed:\n\n• Sent to 4 participants\n• CRM updated automatically\n• Follow-up reminders scheduled\n• Action items assigned');
+        }
+
+        // Initialize demo data
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulate real-time updates
+            setInterval(() => {
+                const time = document.getElementById('recording-time');
+                if (isRecording && time.style.display === 'block') {
+                    const current = time.textContent.match(/\d+:\d+/)[0];
+                    const [minutes, seconds] = current.split(':').map(Number);
+                    let newSeconds = seconds + 1;
+                    let newMinutes = minutes;
+                    if (newSeconds >= 60) {
+                        newSeconds = 0;
+                        newMinutes++;
+                    }
+                    time.textContent = `Recording: ${newMinutes.toString().padStart(2, '0')}:${newSeconds.toString().padStart(2, '0')}`;
+                }
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
+
+
